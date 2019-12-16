@@ -2,7 +2,7 @@ package spark_as_consumer_package
 
 import org.apache.spark.sql.types._
 
-object static_values {
+protected object static_values {
 
  val psition_shema: StructType = new StructType()
    .add("lat", DoubleType)
