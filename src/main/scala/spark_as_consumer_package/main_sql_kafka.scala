@@ -2,7 +2,7 @@ package spark_as_consumer_package
 
 import common_tools.vals._
 import org.apache.spark.sql.DataFrame
-import org.apache.spark.sql.functions.{col, from_json}
+import org.apache.spark.sql.functions._
 import spark_as_consumer_package.static_values._
 
 object main_sql_kafka {
@@ -18,17 +18,24 @@ object main_sql_kafka {
       //      .option("startingOffsets", "earliest")
       .load()
 
-    val consoleOutput: DataFrame = inputDf
+    val message: DataFrame = inputDf
       .withColumn("value_toString", col("value")
         .cast("string"))
+//pour marseille par example
+    val Latitude = 43.278932
+    val Longitude = 5.3727702
+    val message_parsed = message.
 
-    val consoleOutput1 = consoleOutput.
+      //    --------------------------------------------------------------------------------------------------------------
       withColumn("value_toCols", from_json(col("value_toString"), shemavilib))
-      //      .select("value_toCols.banking")
-      .select("timestamp", "value_toCols")
-    //      .where("value_toCols.contract_name is not null")
+      .withColumn("mylat", lit(Latitude)).withColumn("mylang", lit(Longitude))
+      .withColumn("rayon", sqrt(pow(col("value_toCols.position.lat") - col("mylat"), 2) +
+        pow(col("value_toCols.position.lng") - col("mylang"), 2)))
+      .select("timestamp", "value_toCols.address", "value_toCols.contract_name", "value_toCols.position", "mylat", "mylang", "rayon")
+      .where(col("rayon") < 0.02)
 
-    val dd = consoleOutput1.writeStream
+
+    val dd = message_parsed.writeStream
       .outputMode("append")
       .format("console").option("truncate", value = false)
       .start()

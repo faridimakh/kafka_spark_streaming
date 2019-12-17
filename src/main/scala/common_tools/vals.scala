@@ -10,9 +10,8 @@ object vals {
     .appName("velib_app")
     .master("local[*]")
     .getOrCreate()
-  lazy val actual_time_add_step: BigInt => BigInt = (step: BigInt) => Calendar.getInstance().getTimeInMillis + step
-  final val url = "https://api.jcdecaux.com/vls/v1/stations?apiKey=2a5d13ea313bf8dc325f8783f888de4eb96a8c14"
-  final val path_query_for_storage = "/home/farid/Bureau/vlibStation/"
-
+  final lazy val actual_time_add_step: BigInt => BigInt = (step: BigInt) => Calendar.getInstance().getTimeInMillis + step
+  final lazy val url = "https://api.jcdecaux.com/vls/v1/stations?apiKey=2a5d13ea313bf8dc325f8783f888de4eb96a8c14"
+  final lazy val path_query_for_storage = "/home/farid/Bureau/vlibStation/"
 }
 

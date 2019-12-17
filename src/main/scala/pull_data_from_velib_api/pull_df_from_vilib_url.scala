@@ -1,6 +1,6 @@
 package pull_data_from_velib_api
 import java.util.Calendar
-import common_tools.methodes._
+import common_tools.functions._
 import common_tools.vals._
 import org.apache.spark.sql.DataFrame
 import org.apache.spark.sql.functions.{current_timestamp, date_format, lit}

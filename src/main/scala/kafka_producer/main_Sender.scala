@@ -2,7 +2,7 @@ package kafka_producer
 import java.util.Calendar
 
 import common_tools.vals._
-import common_tools.methodes._
+import common_tools.functions._
 protected object main_Sender {
   def main(args: Array[String]): Unit = {
 //    ecouter l'api et envoyer vers le topic velib-stations pour 6 seconds

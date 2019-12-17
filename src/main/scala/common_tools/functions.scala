@@ -4,7 +4,7 @@ import common_tools.vals._
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.{DataFrame, SaveMode}
 
-object methodes {
+object functions {
   /**
    * @param df              : dataframe name to store
    * @param nb_partition    : nonber of partition that you subdivide your df
