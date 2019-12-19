@@ -1,4 +1,4 @@
-package kafka_producer
+package api_to_kafka
 
 import java.util.Properties
 

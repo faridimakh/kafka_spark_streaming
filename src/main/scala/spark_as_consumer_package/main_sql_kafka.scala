@@ -21,7 +21,7 @@ object main_sql_kafka {
     val message: DataFrame = inputDf
       .withColumn("value_toString", col("value")
         .cast("string"))
-//pour marseille par example
+    //pour marseille par example
     val Latitude = 43.278932
     val Longitude = 5.3727702
     val message_parsed = message.

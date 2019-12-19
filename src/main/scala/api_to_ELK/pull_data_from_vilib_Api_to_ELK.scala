@@ -1,9 +1,9 @@
-package tespack
+package api_to_ELK
 
 import java.util.Calendar
 
 import common_tools.functions.Get_Json_from_url
-import common_tools.vals.{actual_time_add_step, spark, url}
+import common_tools.vals.{actual_time_add_listening_time, spark, url}
 import org.apache.spark.sql.DataFrame
 import org.apache.spark.sql.functions.{current_timestamp, date_format, lit}
 
@@ -17,7 +17,7 @@ case class pull_data_from_vilib_Api_to_ELK(time_listening: Int, waiting_time_bef
     println("time_listening= " + time_listening + " Error, ,must bye must be higher than waiting_time_before_asking_api= " + waiting_time_before_asking_api + " ! chang values!")
   else {
     var df_velib_stations_receiver: DataFrame = spark.read json Get_Json_from_url(url)
-    val actual: BigInt = actual_time_add_step(time_listening)
+    val actual: BigInt = actual_time_add_listening_time(time_listening)
 
     var i: Long = Calendar.getInstance().getTimeInMillis
     while (i < actual) {
