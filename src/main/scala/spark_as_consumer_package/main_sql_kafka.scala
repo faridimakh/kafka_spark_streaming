@@ -28,10 +28,10 @@ object main_sql_kafka {
 
       //    --------------------------------------------------------------------------------------------------------------
       withColumn("value_toCols", from_json(col("value_toString"), shemavilib))
-      .withColumn("mylat", lit(Latitude)).withColumn("mylang", lit(Longitude))
-      .withColumn("rayon", sqrt(pow(col("value_toCols.position.lat") - col("mylat"), 2) +
-        pow(col("value_toCols.position.lng") - col("mylang"), 2)))
-      .select("timestamp", "value_toCols.address", "value_toCols.contract_name", "value_toCols.position", "mylat", "mylang", "rayon")
+      .withColumn("my_lat", lit(Latitude)).withColumn("my_lang", lit(Longitude))
+      .withColumn("rayon", sqrt(pow(col("value_toCols.position.lat") - col("my_lat"), 2) +
+        pow(col("value_toCols.position.lng") - col("my_lang"), 2)))
+      .select("timestamp", "value_toCols.address", "value_toCols.contract_name", "value_toCols.position", "my_lat", "my_lang", "rayon")
       .where(col("rayon") < 0.02)
 
 

@@ -1,4 +1,4 @@
-package pull_data_from_velib_api
+package api_to_local
 
 object Mainclass extends App {
 
