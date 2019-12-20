@@ -1,12 +1,9 @@
 package api_to_ELK
-
 import java.util.Calendar
-
 import common_tools.functions.Get_Json_from_url
 import common_tools.vals.{actual_time_add_listening_time, spark, url}
 import org.apache.spark.sql.DataFrame
 import org.apache.spark.sql.functions.{current_timestamp, date_format, lit}
-
 /**
  *
  * @param time_listening                 : le temps que vous souhaiter  pour rcouter l'api
@@ -33,7 +30,6 @@ case class pull_data_from_vilib_Api_to_ELK(time_listening: Int, waiting_time_bef
       .option("es.port", "9200")
       .option("es.nodes", "localhost")
       .mode("append")
-//      .save("vilimb/doc")
       .save("vilimbfar/doc")
   }
 }

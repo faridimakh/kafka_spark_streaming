@@ -12,7 +12,7 @@ import org.apache.spark.sql.functions.{current_timestamp, date_format, lit}
  * @param time_listening                 : le temps que vous souhaiter  pour ecouter l'api
  * @param waiting_time_before_asking_api : intervalle de temps entre l'appelle à l'api
  */
-protected case class pull_data_from_vilib_Api_to_local(time_listening: Int, waiting_time_before_asking_api: Int = 1000) {
+protected case class pull_data_from_vilib_Api_to_local(time_listening: Int=10000, waiting_time_before_asking_api: Int = 1000) {
   if (this.time_listening < waiting_time_before_asking_api)
     println("time_listening= " + time_listening + " Error, ,must bye must be higher than waiting_time_before_asking_api= " + waiting_time_before_asking_api + " ! chang values!")
   else {
