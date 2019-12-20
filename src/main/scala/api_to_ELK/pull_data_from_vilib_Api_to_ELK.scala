@@ -9,8 +9,8 @@ import org.apache.spark.sql.functions.{current_timestamp, date_format, lit}
 
 /**
  *
- * @param time_listening: le temps que vous souhaiter  pour rcouter l'api
- * @param waiting_time_before_asking_api: intervalle de temps entre l'appelle à l'api
+ * @param time_listening                 : le temps que vous souhaiter  pour rcouter l'api
+ * @param waiting_time_before_asking_api : intervalle de temps entre l'appelle à l'api
  */
 case class pull_data_from_vilib_Api_to_ELK(time_listening: Int, waiting_time_before_asking_api: Int = 1000) {
   if (this.time_listening < waiting_time_before_asking_api)

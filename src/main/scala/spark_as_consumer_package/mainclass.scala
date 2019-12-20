@@ -3,9 +3,8 @@ package spark_as_consumer_package
 import common_tools.vals._
 import org.apache.spark.sql.DataFrame
 import org.apache.spark.sql.functions._
-import spark_as_consumer_package.static_values._
 
-object main_sql_kafka {
+object mainclass {
   def main(args: Array[String]): Unit = {
 
     spark.sparkContext.setLogLevel("WARN")
@@ -13,9 +12,8 @@ object main_sql_kafka {
       .format("kafka")
       .option("kafka.bootstrap.servers", "localhost:9092")
       .option("subscribe", "velib-stations")
-      .option("startingOffsets", "latest")
       .option("encoding", "UTF-8")
-      //      .option("startingOffsets", "earliest")
+      .option("startingOffsets", "latest")
       .load()
 
     val message: DataFrame = inputDf
@@ -27,7 +25,7 @@ object main_sql_kafka {
     val message_parsed = message.
 
       //    --------------------------------------------------------------------------------------------------------------
-      withColumn("value_toCols", from_json(col("value_toString"), shemavilib))
+      withColumn("value_toCols", from_json(col("value_toString"), schema_valid))
       .withColumn("my_lat", lit(Latitude)).withColumn("my_lang", lit(Longitude))
       .withColumn("rayon", sqrt(pow(col("value_toCols.position.lat") - col("my_lat"), 2) +
         pow(col("value_toCols.position.lng") - col("my_lang"), 2)))
@@ -35,10 +33,11 @@ object main_sql_kafka {
       .where(col("rayon") < 0.02)
 
 
-    val dd = message_parsed.writeStream
+    val Dsream_final = message_parsed.writeStream
       .outputMode("append")
       .format("console").option("truncate", value = false)
       .start()
-    dd.awaitTermination()
+    Dsream_final.awaitTermination()
+
   }
 }

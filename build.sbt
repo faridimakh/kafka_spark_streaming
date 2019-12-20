@@ -28,8 +28,6 @@ libraryDependencies ++= Seq(
   "org.scala-lang" % "scala-library" % scalaVersion.value
 )
 
-// https://mvnrepository.com/artifact/org.elasticsearch/elasticsearch-spark
-// https://mvnrepository.com/artifact/org.elasticsearch/elasticsearch-spark-20
 libraryDependencies += "org.elasticsearch" %% "elasticsearch-spark-20" % "7.5.0"
 
-libraryDependencies += "org.apache.spark" %% "spark-streaming-kafka-0-8" % "2.0.0-preview"
+libraryDependencies += "org.apache.spark" %% "spark-streaming-kafka-0-10" % "2.0.0"

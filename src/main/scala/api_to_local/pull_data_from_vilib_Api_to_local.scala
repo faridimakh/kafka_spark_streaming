@@ -19,11 +19,11 @@ protected case class pull_data_from_vilib_Api_to_local(time_listening: Int, wait
     //  val waiting_time_before_asking_api=1000
     var df_velib_stations_receiver: DataFrame = spark.read json Get_Json_from_url(url)
     val actual: BigInt = actual_time_add_listening_time(time_listening) //step in millisecond
-    var i: Long = Calendar.getInstance().getTimeInMillis
-    while (i < actual) {
+    var time_increase: Long = Calendar.getInstance().getTimeInMillis
+    while (time_increase < actual) {
       df_velib_stations_receiver = df_velib_stations_receiver.union(spark.read.json(Get_Json_from_url(url)))
       Thread.sleep(waiting_time_before_asking_api)
-      i = Calendar.getInstance().getTimeInMillis
+      time_increase = Calendar.getInstance().getTimeInMillis
     }
     df_velib_stations_receiver.printSchema()
     df_velib_stations_receiver = df_velib_stations_receiver.withColumn("date", date_format(lit(current_timestamp()), "MM-dd-yyyy"))
