@@ -8,6 +8,6 @@ object elk_kafka_tools {
     "key.deserializer" -> classOf[StringDeserializer],
     "value.deserializer" -> classOf[StringDeserializer],
     "auto.offset.reset" -> "latest",
-    "group.id" -> "test-consumer-group" //le groupe de consumer par defaut
+    "group.id" -> "test-consumer-group" //le groupe de consumer par default
   )
 }
