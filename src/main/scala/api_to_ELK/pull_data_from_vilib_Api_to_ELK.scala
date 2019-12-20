@@ -33,6 +33,7 @@ case class pull_data_from_vilib_Api_to_ELK(time_listening: Int, waiting_time_bef
       .option("es.port", "9200")
       .option("es.nodes", "localhost")
       .mode("append")
-      .save("vilimb/doc")
+//      .save("vilimb/doc")
+      .save("vilimbfar/doc")
   }
 }

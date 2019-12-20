@@ -1,8 +1,9 @@
 package kafka_to_elk
 
-import common_tools.vals.schema_valid
+import common_tools.vals._
+import kafka_to_elk.elk_kafka_tools._
 import org.apache.kafka.clients.consumer.ConsumerRecord
-import org.apache.spark.sql
+import org.apache.log4j.{Level, Logger}
 import org.apache.spark.sql.Dataset
 import org.apache.spark.sql.functions._
 import org.apache.spark.streaming.dstream.{DStream, InputDStream}
@@ -10,20 +11,13 @@ import org.apache.spark.streaming.kafka010.ConsumerStrategies.Subscribe
 import org.apache.spark.streaming.kafka010.KafkaUtils
 import org.apache.spark.streaming.kafka010.LocationStrategies.PreferConsistent
 import org.apache.spark.streaming.{Seconds, StreamingContext}
-import kafka_to_elk.elk_kafka_tools._
 
 object main_class {
   def main(args: Array[String]): Unit = {
-    val sprk = new sql.SparkSession.Builder()
-      .appName("velib_app")
-      .master("local[*]") //change to yarn for cluster running
-      .getOrCreate()
-    val streamingContext = new StreamingContext(sprk.sparkContext, Seconds(2))
 
-    //    Logger.getLogger("org").setLevel(Level.ERROR)
-
-
-    import sprk.implicits._
+    val streamingContext = new StreamingContext(spark.sparkContext, Seconds(2))
+    Logger.getLogger("org").setLevel(Level.ERROR)
+    import spark.implicits._
     val stream: InputDStream[ConsumerRecord[String, String]] = KafkaUtils.createDirectStream[String, String](
       streamingContext, locationStrategy = PreferConsistent, consumerStrategy = Subscribe[String, String](Array("velib-stations"), kafkaParams))
     //reccuperer le message
@@ -39,7 +33,6 @@ object main_class {
         .mode("append")
         .save("vilibindex/doc")
     })
-
     streamingContext.start()
     streamingContext.awaitTermination()
   }
