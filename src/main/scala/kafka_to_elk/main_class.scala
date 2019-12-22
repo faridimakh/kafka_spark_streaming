@@ -31,7 +31,7 @@ object main_class {
         .option("es.port", "9200")
         .option("es.nodes", "localhost")
         .mode("append")
-        .save("vilibindex/doc")
+        .save("/doc")
     })
     streamingContext.start()
     streamingContext.awaitTermination()
