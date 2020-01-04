@@ -3,14 +3,15 @@ package common_tools
 import java.util.Calendar
 
 import org.apache.spark.sql
+import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.types._
 
 object vals {
-  final val spark = new sql.SparkSession.Builder()
+  final lazy val spark: SparkSession = new sql.SparkSession.Builder()
     .appName("velib_app")
     .master("local[*]") //change to "yarn" for cluster running
     .getOrCreate()
-  final val spark_elastic_config = Seq(("es.nodes", "localhost"), ("es.port", "9200"), ("es.index.auto.create", "true"),
+   final lazy val spark_elastic_config = Seq(("es.nodes", "localhost"), ("es.port", "9200"), ("es.index.auto.create", "true"),
     ("spark.serializer", "org.apache.spark.serializer.KryoSerializer"), ("es.write.operation", "upsert"))
   spark_elastic_config.foreach(x => spark.conf.set(x._1, x._2))
 
@@ -22,7 +23,7 @@ object vals {
     .add("lat", DoubleType)
     .add("lng", DoubleType)
 
-  val schema_valid: StructType = new StructType()
+  final lazy val schema_valid: StructType = new StructType()
     .add("number", IntegerType, nullable = true)
     .add("contract_name", StringType, nullable = true)
     .add("name", StringType, nullable = true)
