@@ -17,5 +17,3 @@ libraryDependencies ++= Seq(
   "org.scala-lang" % "scala-library" % scalaVersion.value
 
 )
-// https://mvnrepository.com/artifact/org.teiid.connectors/translator-loopback
-//libraryDependencies += "org.teiid.connectors" % "translator-loopback" % "10.0.0.Final"
