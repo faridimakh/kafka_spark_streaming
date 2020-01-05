@@ -1,21 +1,19 @@
-package around_localisation_diagnostic_stations
+package kafka_to_elk
 
-import common_tools.vals._
+import common_tools.vals.{schema_valid, spark}
+import kafka_to_elk.kafka_tune_params._
 import org.apache.spark.sql.DataFrame
 import org.apache.spark.sql.functions._
+import org.apache.spark.sql.streaming.DataStreamReader
 
-object mainclass {
+object test_around_localisation_diagnostic_stations {
   def main(args: Array[String]): Unit = {
+    //    lazy val DStream_reader_Params = Seq(("kafka.bootstrap.servers", "localhost:9092"), ("subscribe", "velib-stations"), ("encoding", "UTF-8"), ("startingOffsets", "latest"))
 
-    val inputDf = spark.readStream
-      .format("kafka")
-      .option("kafka.bootstrap.servers", "localhost:9092")
-      .option("subscribe", "velib-stations")
-      .option("encoding", "UTF-8")
-      .option("startingOffsets", "latest")
-      .load()
-
-    val message: DataFrame = inputDf
+    val DataStreamReader_Options: DataStreamReader = spark.readStream.format("kafka")
+    DStream_reader_Params.foreach(x => DataStreamReader_Options.option(x._1, x._2))
+    val imputeDF = DataStreamReader_Options.load()
+    val message: DataFrame = imputeDF
       .withColumn("value_toString", col("value")
         .cast("string"))
     //pour marseille par example:
@@ -34,7 +32,8 @@ object mainclass {
 
     val Dsream_final = message_parsed.writeStream
       .outputMode("append")
-      .format("console").option("truncate", value = false)
+      .format("console")
+      .option("truncate", value = false)
       .start()
     Dsream_final.awaitTermination()
   }

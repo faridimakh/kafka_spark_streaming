@@ -34,8 +34,10 @@ object functions {
       .withColumn("lat", col("position.lat"))
       .withColumn("lng", col("position.lng"))
       .withColumn("timestamp", lit(current_timestamp()))
-      .withColumn("random_col", when(rand() > 0.5,when(rand()>0.2,3).otherwise(2)).otherwise(0))
-    //      .drop("position")
+      .withColumn("random_col", when(rand() > 0.5, when(rand() > 0.2, 3).otherwise(2)).otherwise(0))
+      //pour voir un changement remarquable de données j'ai rajouté (vélos) j'ai rajouté deux colume qui change continuellement
+      .withColumn("random_col", rand() * 30)
+      .withColumn("random_col2", rand() * 30)
     df1
 
   }

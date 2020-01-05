@@ -1,5 +1,6 @@
 package kafka_to_elk
 
+import common_tools.functions._
 import common_tools.vals._
 import kafka_to_elk.kafka_tune_params._
 import org.apache.kafka.clients.consumer.ConsumerRecord
@@ -16,7 +17,7 @@ import org.elasticsearch.spark.sql._
 object main_class {
   def main(args: Array[String]): Unit = {
 
-    val streamingContext = new StreamingContext(spark.sparkContext, Seconds(1))
+    val streamingContext: StreamingContext = new StreamingContext(spark.sparkContext, Seconds(1))
     Logger.getLogger("org").setLevel(Level.ERROR)
     import spark.implicits._
     val stream: InputDStream[ConsumerRecord[String, String]] = KafkaUtils.createDirectStream[String, String](
@@ -28,13 +29,11 @@ object main_class {
       var row_to_dataSet_parsed: DataFrame = row_to_dataSet
         .withColumn("structuredColumn", from_json(col("value"), schema_valid)).drop("value")
       coloumn_vilib_api.foreach(x => row_to_dataSet_parsed = row_to_dataSet_parsed.withColumn(x, col("structuredColumn." + x)))
-      //pour voir un changement remarquable de données j'ai rajouté (vélos) j'ai rajouté deux colume qui change continuellement 
-      row_to_dataSet_parsed = row_to_dataSet_parsed.withColumn("random_col", rand() * 3)
-      row_to_dataSet_parsed = row_to_dataSet_parsed.withColumn("random_col2", rand() * 3)
       row_to_dataSet_parsed = row_to_dataSet_parsed.drop("structuredColumn")
+      row_to_dataSet_parsed = process_data_api(row_to_dataSet_parsed)
       row_to_dataSet_parsed.saveToEs("vilib/1", Map("es.mapping.id" -> "name"))
     })
     streamingContext.start()
     streamingContext.awaitTermination()
-  }
 }
+  }
