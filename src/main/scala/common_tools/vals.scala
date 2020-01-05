@@ -25,7 +25,7 @@ object vals {
     .add("lat", DoubleType)
     .add("lng", DoubleType)
 
-  final lazy val schema_valid: StructType = new StructType()
+  final lazy val schema_vilib_data: StructType = new StructType()
     .add("number", IntegerType, nullable = true)
     .add("contract_name", StringType, nullable = true)
     .add("name", StringType, nullable = true)

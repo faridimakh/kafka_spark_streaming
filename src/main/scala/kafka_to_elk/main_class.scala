@@ -27,7 +27,7 @@ object main_class {
     message.foreachRDD(x => {
       val row_to_dataSet: Dataset[String] = x.toDS()
       var row_to_dataSet_parsed: DataFrame = row_to_dataSet
-        .withColumn("structuredColumn", from_json(col("value"), schema_valid)).drop("value")
+        .withColumn("structuredColumn", from_json(col("value"), schema_vilib_data)).drop("value")
       coloumn_vilib_api.foreach(x => row_to_dataSet_parsed = row_to_dataSet_parsed.withColumn(x, col("structuredColumn." + x)))
       row_to_dataSet_parsed = row_to_dataSet_parsed.drop("structuredColumn")
       row_to_dataSet_parsed = process_data_api(row_to_dataSet_parsed)
