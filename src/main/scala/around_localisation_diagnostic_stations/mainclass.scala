@@ -7,7 +7,6 @@ import org.apache.spark.sql.functions._
 object mainclass {
   def main(args: Array[String]): Unit = {
 
-    spark.sparkContext.setLogLevel("WARN")
     val inputDf = spark.readStream
       .format("kafka")
       .option("kafka.bootstrap.servers", "localhost:9092")

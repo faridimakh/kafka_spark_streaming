@@ -12,8 +12,6 @@ libraryDependencies ++= Seq(
   "org.apache.spark" %% "spark-sql-kafka-0-10" % spark_Version,
   "org.apache.spark" % "spark-streaming_2.11" % spark_Version,
   "org.elasticsearch" %% "elasticsearch-spark-20" % "7.5.0",
-//  "org.elasticsearch" %% "elasticsearch-spark-20" % "6.0.0",
   "org.apache.spark" %% "spark-streaming-kafka-0-10" % "2.0.0",
   "org.scala-lang" % "scala-library" % scalaVersion.value
-
 )

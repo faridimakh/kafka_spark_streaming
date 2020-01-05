@@ -27,7 +27,7 @@ object main_class {
       val row_to_dataSet: Dataset[String] = x.toDS()
       var row_to_dataSet_parsed: DataFrame = row_to_dataSet
         .withColumn("structuredColumn", from_json(col("value"), schema_valid)).drop("value")
-      coloumn_vilib.foreach(x => row_to_dataSet_parsed = row_to_dataSet_parsed.withColumn(x, col("structuredColumn." + x)))
+      coloumn_vilib_api.foreach(x => row_to_dataSet_parsed = row_to_dataSet_parsed.withColumn(x, col("structuredColumn." + x)))
       //pour voir un changement remarquable de données j'ai rajouté (vélos) j'ai rajouté deux colume qui change continuellement 
       row_to_dataSet_parsed = row_to_dataSet_parsed.withColumn("random_col", rand() * 3)
       row_to_dataSet_parsed = row_to_dataSet_parsed.withColumn("random_col2", rand() * 3)
