@@ -36,8 +36,8 @@ object functions {
       .withColumn("timestamp", lit(current_timestamp()))
       .withColumn("random_col", when(rand() > 0.5, when(rand() > 0.2, 3).otherwise(2)).otherwise(0))
       //pour voir un changement remarquable de données j'ai rajouté (vélos) j'ai rajouté deux colume qui change continuellement
-      .withColumn("random_col", rand() * 30)
-      .withColumn("random_col2", rand() * 30)
+      .withColumn("random_col", rand() * 3)
+      .withColumn("random_col2", rand() * 3)
     df1
 
   }
