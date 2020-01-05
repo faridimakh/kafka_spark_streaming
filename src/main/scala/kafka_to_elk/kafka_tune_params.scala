@@ -2,7 +2,7 @@ package kafka_to_elk
 
 import org.apache.kafka.common.serialization.StringDeserializer
 
-object elk_kafka_tools {
+object kafka_tune_params {
   val kafkaParams: Map[String, Object] = Map[String, Object](
     "bootstrap.servers" -> "localhost:9092",
     "key.deserializer" -> classOf[StringDeserializer],

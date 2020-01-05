@@ -4,7 +4,7 @@ import java.util.Properties
 
 import org.apache.kafka.clients.producer.KafkaProducer
 
-protected object producer_instance {
+protected object producer_tune_parms {
   final val get_producer_tuned: KafkaProducer[String, String] = {
 
     val producerProps = new Properties()

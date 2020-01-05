@@ -1,4 +1,4 @@
-package spark_as_consumer_package
+package around_localisation_diagnostic_stations
 
 import common_tools.vals._
 import org.apache.spark.sql.DataFrame
@@ -19,7 +19,7 @@ object mainclass {
     val message: DataFrame = inputDf
       .withColumn("value_toString", col("value")
         .cast("string"))
-    //pour marseille par example
+    //pour marseille par example:
     val Latitude = 43.278932
     val Longitude = 5.3727702
     val message_parsed = message.
@@ -38,6 +38,5 @@ object mainclass {
       .format("console").option("truncate", value = false)
       .start()
     Dsream_final.awaitTermination()
-
   }
 }

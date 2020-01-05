@@ -34,7 +34,7 @@ object functions {
       .withColumn("lat", col("position.lat"))
       .withColumn("lng", col("position.lng"))
       .withColumn("timestamp", lit(current_timestamp()))
-      .withColumn("isVal", when(rand() > 0.5,when(rand()>0.2,3).otherwise(2)).otherwise(0))
+      .withColumn("random_col", when(rand() > 0.5,when(rand()>0.2,3).otherwise(2)).otherwise(0))
     //      .drop("position")
     df1
 
