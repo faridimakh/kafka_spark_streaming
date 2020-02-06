@@ -21,6 +21,7 @@ object vals {
   final lazy val path_data_storage = "/home/farid/Bureau/vlibStation/"
   final lazy val coloumn_vilib_api = List("number", "contract_name", "name", "address", "position", "banking", "bonus", "bike_stands", "available_bike_stands", "available_bikes", "status", "last_update")
 
+
   private val position_shema: StructType = new StructType()
     .add("lat", DoubleType)
     .add("lng", DoubleType)

@@ -19,7 +19,6 @@ object test_around_localisation_diagnostic_stations {
     //pour marseille par example:
     val Latitude = 43.278932
     val Longitude = 5.3727702
-
     //    --------------------------------------------------------------------------------------------------------------
     val message_parsed = message
       .withColumn("value_toCols", from_json(col("value_toString"), schema_vilib_data))

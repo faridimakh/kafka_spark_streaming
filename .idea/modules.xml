@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/kafka_spark_streaming.iml" filepath="$PROJECT_DIR$/.idea/modules/kafka_spark_streaming.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/kafka_spark_streaming-build.iml" filepath="$PROJECT_DIR$/.idea/modules/kafka_spark_streaming-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/prodpython.iml" filepath="$PROJECT_DIR$/prodpython.iml" />
     </modules>
   </component>
 </project>
