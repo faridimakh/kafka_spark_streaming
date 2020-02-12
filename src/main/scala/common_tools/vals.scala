@@ -1,26 +1,35 @@
 package common_tools
 
-import java.util.Calendar
+import java.util.{Calendar, Properties}
 
-import org.apache.spark.sql
+import com.typesafe.config.{Config, ConfigFactory}
+import common_tools.functions.{ConfigFormat_to_MapFormat, ConfigFormat_to_PropertiesFormat}
+import org.apache.kafka.clients.producer.KafkaProducer
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.types._
+import org.apache.spark.streaming.{Seconds, StreamingContext}
 
 object vals {
-  final lazy val spark: SparkSession = new sql.SparkSession.Builder()
-    .appName("velib_app")
-    .master("local[*]") //change to "yarn" for cluster running
-    .getOrCreate()
+  final lazy val spark_elastic_config: Seq[(String, Object)] = ConfigFormat_to_MapFormat(myconf.getConfig("elsastic")).toList
+  final lazy val url = myconf.getString("url")
+  final val myconf: Config = ConfigFactory.load("application.conf")
+  //  final val spark = myconf.getString("spark")
+
+  final lazy val spark: SparkSession = new SparkSession.Builder().appName(myconf.getString("spark.name"))
+    .master(myconf.getString("spark.master")).getOrCreate()
+  spark_elastic_config.foreach(x => spark.conf.set(x._1, x._2.toString))
   spark.sparkContext.setLogLevel("WARN")
-  final lazy val spark_elastic_config = Seq(("es.nodes", "localhost"), ("es.port", "9200"), ("es.index.auto.create", "true"),
-    ("spark.serializer", "org.apache.spark.serializer.KryoSerializer"), ("es.write.operation", "upsert"))
-  spark_elastic_config.foreach(x => spark.conf.set(x._1, x._2))
+
+  final lazy val producerProps: Properties = ConfigFormat_to_PropertiesFormat(myconf.getConfig("producerprop"))
+
 
   final lazy val actual_time_add_listening_time: BigInt => BigInt = (listening_time: BigInt) => Calendar.getInstance().getTimeInMillis + listening_time
-  final lazy val url = "https://api.jcdecaux.com/vls/v1/stations?apiKey=2a5d13ea313bf8dc325f8783f888de4eb96a8c14"
-  final lazy val path_data_storage = "/home/farid/Bureau/vlibStation/"
-  final lazy val coloumn_vilib_api = List("number", "contract_name", "name", "address", "position", "banking", "bonus", "bike_stands", "available_bike_stands", "available_bikes", "status", "last_update")
+  final lazy val producer_tuned = new KafkaProducer[String, String](producerProps)
+  final lazy val kafkaParams: Map[String, Object] = ConfigFormat_to_MapFormat(myconf.getConfig("kafkaParams"))
+  final lazy val streamingContext: StreamingContext = new StreamingContext(spark.sparkContext, Seconds(1))
 
+  val maTopic = "velib-stations"
+  final lazy val coloumn_vilib_api = List("number", "contract_name", "name", "address", "position", "banking", "bonus", "bike_stands", "available_bike_stands", "available_bikes", "status", "last_update")
   private val position_shema: StructType = new StructType()
     .add("lat", DoubleType)
     .add("lng", DoubleType)

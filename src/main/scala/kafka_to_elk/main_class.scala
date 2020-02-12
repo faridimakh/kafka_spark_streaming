@@ -2,7 +2,6 @@ package kafka_to_elk
 
 import common_tools.functions._
 import common_tools.vals._
-import kafka_to_elk.kafka_tune_params._
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.apache.log4j.{Level, Logger}
 import org.apache.spark.sql.functions._
@@ -11,17 +10,19 @@ import org.apache.spark.streaming.dstream.{DStream, InputDStream}
 import org.apache.spark.streaming.kafka010.ConsumerStrategies.Subscribe
 import org.apache.spark.streaming.kafka010.KafkaUtils
 import org.apache.spark.streaming.kafka010.LocationStrategies.PreferConsistent
-import org.apache.spark.streaming.{Seconds, StreamingContext}
 import org.elasticsearch.spark.sql._
 
 object main_class {
+
   def main(args: Array[String]): Unit = {
 
-    val streamingContext: StreamingContext = new StreamingContext(spark.sparkContext, Seconds(1))
+
     Logger.getLogger("org").setLevel(Level.ERROR)
+
     import spark.implicits._
-    val stream: InputDStream[ConsumerRecord[String, String]] = KafkaUtils.createDirectStream[String, String](
-      streamingContext, locationStrategy = PreferConsistent, consumerStrategy = Subscribe[String, String](Array("velib-stations"), kafkaParams))
+    val stream: InputDStream[ConsumerRecord[String, String]] =
+      KafkaUtils.createDirectStream[String, String](
+        streamingContext, locationStrategy = PreferConsistent, consumerStrategy = Subscribe[String, String](Array(maTopic), kafkaParams))
     //reccuperer le message
     val message: DStream[String] = stream.map(x => x.value)
     message.foreachRDD(x => {
@@ -35,5 +36,5 @@ object main_class {
     })
     streamingContext.start()
     streamingContext.awaitTermination()
-}
   }
+}
