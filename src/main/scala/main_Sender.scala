@@ -1,4 +1,4 @@
-import common_tools.vals._
+import common_tools.vals.spark
 import kafka_to_elk.producer_vilib_to_kafka
 
 object main_Sender {
