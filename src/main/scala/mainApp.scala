@@ -26,4 +26,3 @@ object mainApp extends {
 }
 
 
-//for build project : sbt clean package

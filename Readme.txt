@@ -40,3 +40,4 @@ url = "https://api.jcdecaux.com/vls/v1/stations?apiKey={}".format(API_KEY)
 # kafka manager: manager kafka en mode graphique:
 #  git clone https://github.com/yahoo/kafka-manager.git
 #  ./sbt clean dist
+#for building project : sbt clean package
