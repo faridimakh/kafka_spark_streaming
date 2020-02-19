@@ -3,7 +3,7 @@ import kafka_to_elk.get_from_kafka_process_and_push_to_elastic
 
 import scala.sys.process.Process
 
-object mainApp extends {
+object mainApp  {
   def main(args: Array[String]): Unit = {
     val input = args(0) //for lanching a jar
     if (Set("produce", "process").contains(input)) {
