@@ -1,3 +1,4 @@
+import sys
 import json
 import time
 import urllib.request
@@ -14,6 +15,6 @@ while True:
     response = urllib.request.urlopen(url)
     stations = json.loads(response.read().decode())
     for station in stations:
-        producer.send("velib-stations", json.dumps(station).encode())
+        producer.send(sys.argv[1], json.dumps(station).encode())
     print("{} Produced {} station records".format(time.time(), len(stations)))
     time.sleep(0.5)

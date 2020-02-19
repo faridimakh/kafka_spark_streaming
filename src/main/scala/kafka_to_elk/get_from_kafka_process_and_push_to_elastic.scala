@@ -19,7 +19,7 @@ object get_from_kafka_process_and_push_to_elastic {
 
   val stream: InputDStream[ConsumerRecord[String, String]] =
     KafkaUtils.createDirectStream[String, String](
-      streamingContext, locationStrategy = PreferConsistent, consumerStrategy = Subscribe[String, String](Array(maTopic), kafkaParams))
+      streamingContext, locationStrategy = PreferConsistent, consumerStrategy = Subscribe[String, String](Array(ma_Topic), kafkaParams))
   //reccuperer le message
   val message: DStream[String] = stream.map(x => x.value)
   message.foreachRDD(x => {
