@@ -5,9 +5,9 @@ import urllib.request
 
 from kafka import KafkaProducer
 
-API_KEY = "2a5d13ea313bf8dc325f8783f888de4eb96a8c14"
+key_api = "2a5d13ea313bf8dc325f8783f888de4eb96a8c14"
 # l adress ou soliciter l API
-url = "https://api.jcdecaux.com/vls/v1/stations?apiKey={}".format(API_KEY)
+url = "https://api.jcdecaux.com/vls/v1/stations?apiKey={}".format(key_api)
 
 producer = KafkaProducer(bootstrap_servers="localhost:9092")
 
