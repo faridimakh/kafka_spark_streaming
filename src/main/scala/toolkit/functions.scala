@@ -5,7 +5,7 @@ import org.apache.spark.sql.DataFrame
 import org.apache.spark.sql.functions._
 
 object functions {
-
+  //-----------------------------------------------------------------------------------------------------------------------------------------------
   def process_data_api(df: DataFrame): DataFrame = {
     val df1 = df
       .withColumn("lat", col("position.lat"))
@@ -16,13 +16,16 @@ object functions {
       .withColumn("random_col2", rand() * 3)
     df1
   }
+  //-----------------------------------------------------------------------------------------------------------------------------------------------
 
+  //-----------------------------------------------------------------------------------------------------------------------------------------------
   def ConfigFormat_to_MapFormat(config: Config): Map[String, Object] = {
     import scala.collection.JavaConversions._
     val map: Map[String, Object] = config.entrySet().map({ entry =>
       entry.getKey -> entry.getValue.unwrapped()
     })(collection.breakOut)
     map
+  //-----------------------------------------------------------------------------------------------------------------------------------------------
   }
 
 
