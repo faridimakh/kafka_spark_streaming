@@ -1,4 +1,4 @@
-package common_tools
+package toolkit
 
 import com.typesafe.config.Config
 import org.apache.spark.sql.DataFrame
@@ -16,7 +16,6 @@ object functions {
       .withColumn("random_col2", rand() * 3)
     df1
   }
-
 
   def ConfigFormat_to_MapFormat(config: Config): Map[String, Object] = {
     import scala.collection.JavaConversions._

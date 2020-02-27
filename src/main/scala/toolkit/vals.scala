@@ -1,16 +1,16 @@
-package common_tools
+package toolkit
 
 import java.util.Calendar
 
 import com.typesafe.config.{Config, ConfigFactory}
-import common_tools.functions.ConfigFormat_to_MapFormat
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.types._
 import org.apache.spark.streaming.{Seconds, StreamingContext}
+import toolkit.functions.ConfigFormat_to_MapFormat
 
 object vals {
   final lazy val spark_elastic_config: Seq[(String, Object)] = ConfigFormat_to_MapFormat(myconf.getConfig("elsastic")).toList
-//  final lazy val url = myconf.getString("url")
+  final lazy val url = myconf.getString("url")
   final val myconf: Config = ConfigFactory.load("application.conf")
   //  final val spark = myconf.getString("spark")
 
@@ -20,10 +20,11 @@ object vals {
 
 
   final lazy val actual_time_add_listening_time: BigInt => BigInt = (listening_time: BigInt) => Calendar.getInstance().getTimeInMillis + listening_time
-  final lazy val kafkaParams: Map[String, Object] = ConfigFormat_to_MapFormat(myconf.getConfig("kafkaParams"))
+  final lazy val kafkaParams: Map[String, Object] = ConfigFormat_to_MapFormat(myconf.getConfig("kafkaParamsConsum"))
   final lazy val streamingContext: StreamingContext = new StreamingContext(spark.sparkContext, Seconds(1))
 
-  final lazy val  ma_Topic = "topicStations"
+//  final lazy val ma_Topic = "vilib_station_vilib_station"
+  final lazy val ma_Topic = "vilib_farrrrrrrrrrrrr"
   final lazy val coloumn_vilib_api = List("number", "contract_name", "name", "address", "position", "banking", "bonus", "bike_stands", "available_bike_stands", "available_bikes", "status", "last_update")
   private val position_shema: StructType = new StructType()
     .add("lat", DoubleType)
