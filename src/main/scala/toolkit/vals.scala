@@ -23,8 +23,7 @@ object vals {
   final lazy val kafkaParams: Map[String, Object] = ConfigFormat_to_MapFormat(myconf.getConfig("kafkaParamsConsum"))
   final lazy val streamingContext: StreamingContext = new StreamingContext(spark.sparkContext, Seconds(1))
 
-//  final lazy val ma_Topic = "vilib_station_vilib_station"
-  final lazy val ma_Topic = "vilib_farrrrrrrrrrrrr"
+  final lazy val ma_Topic = "vilib_station"
   final lazy val coloumn_vilib_api = List("number", "contract_name", "name", "address", "position", "banking", "bonus", "bike_stands", "available_bike_stands", "available_bikes", "status", "last_update")
   private val position_shema: StructType = new StructType()
     .add("lat", DoubleType)
