@@ -7,7 +7,7 @@ import toolkit.functions.{ConfigFormat_to_MapFormat, getArgsFomCaseClass}
 
 import scala.collection.immutable
 object vals {
-  
+
   //-----------------------------------------------------------------------------------------------------------------------------------------------
   final lazy val myconf: Config = ConfigFactory.load("application.conf")
 
