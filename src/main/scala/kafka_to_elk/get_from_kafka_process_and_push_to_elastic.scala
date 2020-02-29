@@ -16,6 +16,7 @@ import toolkit.vals._
 object get_from_kafka_process_and_push_to_elastic extends Thread {
   override def run(): Unit = {
     println("processing and pushing data to elasticsearch is lanched....")
+    println("index "+indexNameElasticsearch+" is created in elasticsearch....")
     Logger.getLogger("org").setLevel(Level.ERROR)
 
     import spark.implicits._
@@ -32,7 +33,8 @@ object get_from_kafka_process_and_push_to_elastic extends Thread {
       coloumn_vilib_api.foreach(x => row_to_dataSet_parsed = row_to_dataSet_parsed.withColumn(x, col("structuredColumn." + x)))
       row_to_dataSet_parsed = row_to_dataSet_parsed.drop("structuredColumn")
       row_to_dataSet_parsed = process_data_api(row_to_dataSet_parsed)
-      row_to_dataSet_parsed.saveToEs("vilib/1", Map("es.mapping.id" -> "name"))
+
+      row_to_dataSet_parsed.saveToEs(indexNameElasticsearch.concat("/1"), Map("es.mapping.id" -> "name"))
     })
     streamingContext.start()
     streamingContext.awaitTermination()

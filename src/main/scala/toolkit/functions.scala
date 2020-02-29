@@ -4,6 +4,8 @@ import com.typesafe.config.Config
 import org.apache.spark.sql.DataFrame
 import org.apache.spark.sql.functions._
 
+import scala.collection.immutable
+import scala.reflect.runtime.universe._
 object functions {
   //-----------------------------------------------------------------------------------------------------------------------------------------------
   def process_data_api(df: DataFrame): DataFrame = {
@@ -16,6 +18,7 @@ object functions {
       .withColumn("random_col2", rand() * 3)
     df1
   }
+
   //-----------------------------------------------------------------------------------------------------------------------------------------------
 
   //-----------------------------------------------------------------------------------------------------------------------------------------------
@@ -25,8 +28,12 @@ object functions {
       entry.getKey -> entry.getValue.unwrapped()
     })(collection.breakOut)
     map
-  //-----------------------------------------------------------------------------------------------------------------------------------------------
   }
+
+  //-----------------------------------------------------------------------------------------------------------------------------------------------
+  def getArgsFomCaseClass[T: TypeTag]: immutable.Seq[String] = typeOf[T].members.collect {
+    case m: MethodSymbol if m.isCaseAccessor => m
+  }.toList.map(x=>x.toString.replaceAll("value","").trim)
 
 
 }
