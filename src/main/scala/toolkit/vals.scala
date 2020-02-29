@@ -3,7 +3,7 @@ package toolkit
 import com.typesafe.config.{Config, ConfigFactory}
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.streaming.{Seconds, StreamingContext}
-import toolkit.functions.{ConfigFormat_to_MapFormat, getArgsFomCaseClass}
+import toolkit.functions.{ConfigFormat_to_MapFormat, getArgsFromCaseClass}
 
 import scala.collection.immutable
 object vals {
@@ -24,7 +24,7 @@ object vals {
 
   final lazy val ma_Topic = "vilib_station"
   final lazy val indexNameElasticsearch = "vilib"
-  final lazy val coloumn_vilib_api: immutable.Seq[String] = getArgsFomCaseClass[station]
+  final lazy val coloumn_vilib_api: immutable.Seq[String] = getArgsFromCaseClass[station]
   //-----------------------------------------------------------------------------------------------------------------------------------------------
 
 }
