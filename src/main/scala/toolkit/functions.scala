@@ -35,5 +35,12 @@ object functions {
     case m: MethodSymbol if m.isCaseAccessor => m
   }.toList.map(x=>x.toString.replaceAll("value","").trim)
 
+  def getArgsFromCaseClassbis[T:TypeTag]: List[String] = {
+    typeOf[T].members.map(x => x.toString)
+      .filter(_.contains("value"))
+      .map(x=>x.replace("value","").trim)
+      .toSet
+      .toList
+  }
 
 }
