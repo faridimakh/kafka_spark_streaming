@@ -3,8 +3,6 @@ package toolkit
 import org.scalatest.FunSuite
 
 class stationTest extends FunSuite {
-//  val plassebo= station(1, "a", "b", "c", position_station(1.2, 3.2), banking = true, bonus = false, 2, 3, 4, "open", 100)//.getJson
-//  val vv: Seq[String] =plassebo.productIterator.toList.map(_.toString)
  private val plassebo: String = station(1, "a", "b", "c", position_station(1.2, 3.2), banking = true, bonus = false, 2, 3, 4, "open", 100).getJson
   private val real: String = "{\"number\":".concat(1.toString + ",")
     .concat("\"contract_name\":").concat("\"a\"" + ",")
