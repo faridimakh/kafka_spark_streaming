@@ -16,3 +16,9 @@ libraryDependencies ++= Seq(
   "org.scala-lang" % "scala-library" % scalaVersion.value,
   "org.scalatest" %% "scalatest" % "3.0.8" % Test
 )
+
+mainClass in assembly := Some("mainApp")
+assemblyMergeStrategy in assembly := {
+  case PathList("META-INF", xs@_*) => MergeStrategy.discard
+  case x => MergeStrategy.first
+}
