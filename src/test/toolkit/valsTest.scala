@@ -1,7 +1,5 @@
 package toolkit
 
-import org.scalatest.FunSuite
-
 class valsTest extends FunSuite {
 
   test("testMyconf") {

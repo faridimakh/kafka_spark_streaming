@@ -9,21 +9,19 @@ import org.apache.spark.streaming.kafka010.ConsumerStrategies.Subscribe
 import org.apache.spark.streaming.kafka010.KafkaUtils
 import org.apache.spark.streaming.kafka010.LocationStrategies.PreferConsistent
 import org.elasticsearch.spark.sql._
-import toolkit.functions._
-import toolkit.station
-import toolkit.vals._
+import toolkit.{functions, statictools}
 
-object get_from_kafka_process_and_push_to_elastic extends Thread {
+object get_from_kafka_process_and_push_to_elastic extends Thread with statictools with functions {
   override def run(): Unit = {
     println("processing and pushing data to elasticsearch is lanched....")
-    println("index "+indexNameElasticsearch+" is created in elasticsearch....")
+    println("index [" + Elasticsearch_indexName + "] is created in elasticsearch....")
     Logger.getLogger("org").setLevel(Level.ERROR)
 
     import spark.implicits._
 
     val stream: InputDStream[ConsumerRecord[String, String]] =
       KafkaUtils.createDirectStream[String, String](
-        streamingContext, locationStrategy = PreferConsistent, consumerStrategy = Subscribe[String, String](Array(ma_Topic), kafkaParams))
+        streamingContext, locationStrategy = PreferConsistent, consumerStrategy = Subscribe[String, String](Array(TopicName), kafkaParams))
     //reccuperer le message
     val message: DStream[String] = stream.map(x => x.value)
     message.foreachRDD(x => {
@@ -34,7 +32,7 @@ object get_from_kafka_process_and_push_to_elastic extends Thread {
       row_to_dataSet_parsed = row_to_dataSet_parsed.drop("structuredColumn")
       row_to_dataSet_parsed = process_data_api(row_to_dataSet_parsed)
 
-      row_to_dataSet_parsed.saveToEs(indexNameElasticsearch.concat("/1"), Map("es.mapping.id" -> "name"))
+      row_to_dataSet_parsed.saveToEs(Elasticsearch_indexName.concat("/1"), Map("es.mapping.id" -> "name"))
     })
     streamingContext.start()
     streamingContext.awaitTermination()

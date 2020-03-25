@@ -1,7 +1,5 @@
 package toolkit
 
-import org.scalatest.FunSuite
-
 class stationTest extends FunSuite {
  private val plassebo: String = station(1, "a", "b", "c", position_station(1.2, 3.2), banking = true, bonus = false, 2, 3, 4, "open", 100).getJson
   private val real: String = "{\"number\":".concat(1.toString + ",")

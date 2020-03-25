@@ -6,7 +6,8 @@ import org.apache.spark.sql.functions._
 
 import scala.collection.immutable
 import scala.reflect.runtime.universe._
-object functions {
+
+trait functions {
   //-----------------------------------------------------------------------------------------------------------------------------------------------
   def process_data_api(df: DataFrame): DataFrame = {
     val df1 = df
@@ -18,7 +19,6 @@ object functions {
       .withColumn("random_col2", rand() * 3)
     df1
   }
-
 
   //-----------------------------------------------------------------------------------------------------------------------------------------------
   def ConfigFormat_to_MapFormat(config: Config): Map[String, Object] = {
@@ -32,12 +32,12 @@ object functions {
   //-----------------------------------------------------------------------------------------------------------------------------------------------
   def getArgsFromCaseClass[T: TypeTag]: immutable.Seq[String] = typeOf[T].members.collect {
     case m: MethodSymbol if m.isCaseAccessor => m
-  }.toList.map(x=>x.toString.replaceAll("value","").trim)
+  }.toList.map(x => x.toString.replaceAll("value", "").trim)
 
-  def getArgsFromCaseClassbis[T:TypeTag]: List[String] = {
+  def getArgsFromCaseClassbis[T: TypeTag]: List[String] = {
     typeOf[T].members.map(x => x.toString)
       .filter(_.contains("value"))
-      .map(x=>x.replace("value","").trim)
+      .map(x => x.replace("value", "").trim)
       .toSet
       .toList
   }

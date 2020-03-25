@@ -1,8 +1,9 @@
-import sys
 import json
+import sys
 import time
 import urllib.request
 from kafka import KafkaProducer
+
 producer = KafkaProducer(bootstrap_servers=sys.argv[3])
 
 while True:

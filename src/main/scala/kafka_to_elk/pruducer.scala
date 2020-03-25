@@ -1,14 +1,14 @@
 package kafka_to_elk
 
-import toolkit.vals.{ma_Topic, myconf, url}
+import toolkit.statictools
 
 import scala.sys.process.Process
 
-object pruducer extends Thread {
+object pruducer extends Thread with statictools {
   override def run(): Unit = {
     println("producer from https://api.jcdecaux.com to kafka is lunched....")
-    println("you are sending data to  topic name: " + ma_Topic + "....")
-    Process("python3 src/main/scala/kafka_to_elk/produce_stations.py " + ma_Topic+" "+url+" "+myconf.getString("kafkaParamsConsum.bootstrap.servers")).!
+    println("you are sending data to  topic name: " + TopicName + "....")
+    Process("python3 src/main/scala/kafka_to_elk/produce_stations.py " + TopicName + " " + url + " " + myconf.getString("kafkaParamsConsum.bootstrap.servers")).!
   }
 
 }

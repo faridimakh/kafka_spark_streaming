@@ -1,8 +1,5 @@
 package toolkit
 
-import org.scalatest.FunSuite
-import toolkit.functions.getArgsFromCaseClass
-
 class functionsTest extends FunSuite {
 
   test("testProcess_data_api") {
